@@ -71,6 +71,19 @@ services:
     networks:
       - app-network
 
+  api:
+    image: python:3.9
+    volumes:
+      - ./api:/app
+    working_dir: /app
+    command: bash -c "pip install -r requirements.txt && python app.py"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - clickhouse
+    networks:
+      - app-network
+
 volumes:
   minio_data:
   clickhouse_data:
@@ -79,3 +92,4 @@ volumes:
 networks:
   app-network:
     driver: bridge
+
